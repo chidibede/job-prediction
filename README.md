@@ -43,10 +43,9 @@ Clean and pre-process the data
 The code for cleaning and preprocessing the data can be seen in this github repository
  https://github.com/chidibede/job-prediction. Basically, all missing values should be handled, HTML tags removed, trailing white spaces accounted for and the text converted to vectors, this will make the data ready for training and feature selection. The libraries needed include pandas and numpy 
 
-Feature selection: to remove unnecessary features the impactful features will be selected by using SVM, from my trial 4 features were important and this had a great bearing on the authenticity of a job posting. One of the features is the presence of a company logo. This means that once a company logo is present, it heavily impacts on the authenticity of a job posting. This leads to the need to add this column in the database when collecting job posting data in the data collection pipeline stated at the beginning of this research. The library needed is the Sklearn Machine Learning Library.
+Feature selection: to remove unnecessary features the impactful features will be selected by using SVM, from my analysis 4 features seemed to be important and this should have a great bearing on the authenticity of a job posting. One of the features is the presence of a company logo. This means that once a company logo is present, it heavily impacts on the authenticity of a job posting. This leads to the need to add this column in the database when collecting job posting data in the data collection pipeline stated at the beginning of this research. Another Feature is location; the location column is used to confirm the location of the company/firm. The library needed is the Sklearn Machine Learning Library.
 
 
 Other solutions 
 Real job prediction based on location
 If no location is entered, the job prediction should be fake but once a location is entered, the location is verified by using Google's map API which will confirm If the job is real or not. 
-
