@@ -14,20 +14,25 @@ except ImportError as i_error:
 CAC_DB = pd.read_csv('used_data/cac_db.csv')
 CAC_DB['name'] = CAC_DB.name.str.lower()
 
-# load the model from disk
-MODEL = joblib.load('cac.py')
-
-def search(company_name):
-    '''Declaring a function that would use our model to fetch users
-    similar to a given user based on user_bio'''
-    try:
-       
-        # Return the company
-        return CAC_DB['name'].iloc[users_index]
-    except KeyError:
-        return 'Enter a valid company name'
-    except IndexError:
-        return 'This company doesnt exist'
+import pandas as pd
+from difflib import get_close_matches
+​
+cac_db = pd.read_csv(r'data\cac_db.csv')
+​
+​
+def search(word):
+    word = word.upper()
+​
+    def start(x):
+        if x.startswith(word):
+            return True
+        else:
+            return False
+​
+    if len(cac_db[cac_db['COMPANY NAME'].apply(start)]) > 0:
+        return cac_db[cac_db['COMPANY NAME'].apply(start)]
+    elif len(get_close_matches(word, cac_db['COMPANY NAME'], 5, cutoff=0.7)) > 0:
+        return get_close_ma
 
 # Initialize the app
 APP = Flask(__name__)
@@ -54,17 +59,12 @@ def company_find():
     for Web App Testing'''
     # get the values from the form
     try:
-        search = [x for x in request.form.values()]
-        for name in company:
-            name_of_user = name.lower()
+        word = [x for x in request.form.values()]
+        for w in word:
+            word = w.lower()
 
-        # recommend
-        company = MODEL.recommend((CAC_DB[CAC_DB.name == Company name]['name']).index[0])
-        
-        Company_search= []
-        for i_d in popular_users['user_id']:
-            Company_search.append(CAC_DB.iloc[i_d, 0])
-        return render_template('cac_search.html', prediction_text=recommended_users)
+        company = search(word) 
+        return render_template('cac_search.html', prediction_text=company_name)
     except KeyError:
         return render_template('cac_search.html', prediction_text=["company does not exist"])
 
